@@ -1,0 +1,23 @@
+<head>
+  <title>Kanban Krazy</title>
+</head>
+
+<body>
+  <h1>Post It Here</h1>
+  {{> tasks}}
+</body>
+
+<template name="tasks">
+  <div class="tasks">
+    {{#each tasks}}
+      {{> task}}
+    {{/each}}
+  </div>
+</template>
+
+<template name="task">
+  <div class="task">
+    <div class="title">{{title}}</div>
+    <div class="description">{{description}}</div>
+  </div>
+</template>
