@@ -3,9 +3,42 @@
 </head>
 
 <body>
-  <h1>Post It Here</h1>
-  {{> tasks}}
+  <h1>Kanban Board</h1>
 </body>
+
+<template name="home">
+  {{#if currentUser}}
+    {{> dashboard}}
+  {{else}}
+    {{> register}}
+    {{> login}}
+  {{/if}}
+</template>
+
+<template name="register">
+    <h2>Register</h2>
+    <form id="register-form" action="action">
+        <input type="email" name="registerEmail" placeholder="Enter Your Email">
+        <input type="password" name="registerPassword" placeholder="Enter Your Password">
+        <input type="submit" value="Register">
+    </form>
+</template>
+
+<template name="login">
+    <h2>Login</h2>
+    <form id="login-form" action="action">
+        <input type="email" name="loginEmail" placeholder="Enter Your Email">
+        <input type="password" name="loginPassword" placeholder="Enter Your Password">
+        <input type="submit" value="Login">
+    </form>
+</template>
+
+<template name="dashboard">
+  <div id="dashboard">
+    <p>You're logged in.</p>
+    <p><a href="#" class="logout">Logout</a></p>
+  </div>
+</template>
 
 <template name="tasks">
   <div class="tasks">

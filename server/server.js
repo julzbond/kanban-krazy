@@ -8,3 +8,7 @@ Meteor.startup(function(){
     });
   }
 });
+
+Meteor.publish('userData', function(){
+
+});
