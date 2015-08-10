@@ -3,21 +3,39 @@
 </head>
 
 <body>
-  <h1>Post It Here</h1>
-  {{> tasks}}
+
 </body>
 
 <template name="tasks">
-  <div class="tasks">
-    {{#each tasks}}
-      {{> task}}
-    {{/each}}
+  <div class="container">
+    <header>
+      <h1>To Do ({{incompleteCount}})</h1>
+
+      <label class="hide-completed">
+        <input type="checkbox" checked="{{hideCompleted}}" />
+        Hide Completed Tasks
+      </label>
+
+      <form class="new-task">
+        <input type="text" id="title" placeholder="Type to add a new task" />
+      </form>
+    </header>
+
+    <ul>
+      {{#each tasks}}
+        {{> task}}
+      {{/each}}
+    </ul>
   </div>
 </template>
 
 <template name="task">
-  <div class="task">
-    <div class="title">{{title}}</div>
-    <div class="description">{{description}}</div>
-  </div>
+  <li class="{{#if checked}}checked{{/if}}">
+    <button class="delete">&times;</button>
+
+    <button type="checkbox" checked="{{checked}}" class="toggle-checked">
+    </button>
+
+    <span class="text">{{title}}</span>
+  </li>
 </template>

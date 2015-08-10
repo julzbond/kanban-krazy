@@ -8,4 +8,4 @@ TasksCollection.allow({
   'remove': function(userId){
     return true;
   }
-})
+});
