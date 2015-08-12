@@ -4,7 +4,7 @@ Meteor.startup(function(){
       title: "Test title",
       description: "This is a task description",
       show: true,
-      createdAt: Date.now()
+      createdAt: new Date()
     });
   }
 });

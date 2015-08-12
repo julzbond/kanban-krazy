@@ -1,8 +1,57 @@
-Router.route('/', function(){
-  this.render('tasks');
-});
-
 if(Meteor.isClient) {
+  Template.register.events({
+    'submit form': function(event){
+      event.preventDefault();
+      console.log('Form submitted.');
+    }
+  });
+
+  Template.register.events({
+    'submit #register-form': function(event){
+      event.preventDefault();
+      var nameVar = event.target.registerName.value;
+      var emailVar = event.target.registerEmail.value;
+      var passwordVar = event.target.registerPassword.value;
+      Accounts.createUser({
+        name: nameVar,
+        email: emailVar,
+        password: passwordVar,
+        createdAt: new Date()
+      },
+      function(error){
+        if(error){
+          console.log(error.reason);
+        } else{
+          Router.go('/dashboard');
+        }
+      });
+    }
+  });
+
+  Template.login.events({
+    'submit #login-form': function(event){
+      event.preventDefault();
+      var emailVar = event.target.loginEmail.value;
+      var passwordVar = event.target.loginPassword.value;
+
+      Meteor.loginWithPassword(emailVar, passwordVar, function(error){
+        if(error) {
+          alert("Incorrect email or password");
+        } else {
+          Router.go('/dashboard');
+        }
+        return false;
+      });
+    }
+  });
+
+  Template.dashboard.events({
+    'click .logout': function(event){
+      event.preventDefault();
+      Meteor.logout();
+      Router.go('/login');
+    }
+  });
 
   Template.tasks.helpers({
 
@@ -24,28 +73,28 @@ if(Meteor.isClient) {
   });
 
   Template.tasks.events({
-    "keypress .new-task": function(evt, tmpl) {
+    "keypress .new-task": function(event, template) {
 
-      var title = tmpl.find("#title").value;
+      var title = template.find("#title").value;
 
       if(title === "") {
         return;
       }
 
-      if(evt.keyCode === 13) {
+      if(event.keyCode === 13) {
         TasksCollection.insert({
           title: title,
           show: true,
-          createdAt: Date.now()
+          createdAt: new Date()
         });
 
-        tmpl.find("#title").value = "";
-        tmpl.find("#title").focus();
-        evt.preventDefault();
+        template.find("#title").value = "";
+        template.find("#title").focus();
+        event.preventDefault();
       }
     },
-    "change .hide-completed input": function (evt) {
-      Session.set("hideCompleted", evt.target.checked);
+    "change .hide-completed input": function (event) {
+      Session.set("hideCompleted", event.target.checked);
     }
   });
 

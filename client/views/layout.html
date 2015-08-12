@@ -6,36 +6,185 @@
 
 </body>
 
+<template name="home">
+  {{#if currentUser}}
+    {{> dashboard}}
+  {{else}}
+    {{> login}}
+  {{/if}}
+</template>
+
+<template name="login">
+  <div class="align">
+    <div class="site__container">
+      <div class="grid__container">
+        <h2 class="login">Login</h2>
+        <form id="login-form" action="action" class="form form--login">
+
+          <div class="form__field">
+            <label class="fontawesome-envelope" for="login__username"><span class="hidden">Username</span></label>
+            <input id="login__username" type="email" class="form__input" name="loginEmail" placeholder="Email" required>
+          </div>
+
+          <div class="form__field">
+            <label class="fontawesome-lock" for="login__password"><span class="hidden">Password</span></label>
+            <input id="login__password" type="password" class="form__input" name="loginPassword" placeholder="Password" required>
+          </div>
+
+          <div class="form__field">
+            <input type="submit" value="Sign In">
+          </div>
+
+        </form>
+          <p class="text--center">Not a member? <a href="/register">Sign up now</a> <span class="fontawesome-arrow-right"></span></p>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="register">
+  <div class="align">
+    <div class="site__container">
+      <div class="grid__container">
+        <h2 class="login">Create a new account</h2>
+        <form id="register-form" action="action" class="form form--login">
+
+          <div class="form__field">
+          <label class="fontawesome-user" for="login__username"><span class="hidden">Name</span></label>
+          <input id="login__username" type="text" class="form__input" name="registerName" placeholder="Enter Your Name">
+          </div>
+
+          <div class="form__field">
+            <label class="fontawesome-envelope" for="login__username"><span class="hidden">Email</span></label>
+            <input id="login__username" type="email" class="form__input" name="registerEmail" placeholder="Enter Your Email" required>
+          </div>
+
+          <div class="form__field">
+            <label class="fontawesome-lock" for="login__password"><span class="hidden">Password</span></label>
+            <input id="login__password" type="password" class="form__input" name="registerPassword" placeholder="Choose a Password" required>
+          </div>
+
+          <div class="form__field">
+            <input type="submit" value="Register">
+          </div>
+
+        </form>
+          <p class="text--center"><a href="/#login">Go Back </a><span class="fontawesome-arrow-left"></span></p>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="dashboard">
+  <div id="dashboard">
+    {{> profile}}
+    {{> tasks}}
+    {{> logout}}
+  </div>
+</template>
+
+<template name="profile">
+  <div class="profile">
+
+  </div>
+</template>
+
+<template name="logout">
+  <div id="logout">
+    <button id="logout-buttons" class="logout"><a class="logout" href="#">Logout</a></button>
+  </div>
+</template>
+
 <template name="tasks">
   <div class="container">
-    <header>
-      <h1>To Do ({{incompleteCount}})</h1>
+    <section class="list_left">
+      <header>
+        <h1>To Do ({{incompleteCount}})</h1>
 
-      <label class="hide-completed">
-        <input type="checkbox" checked="{{hideCompleted}}" />
-        Hide Completed Tasks
-      </label>
+        <label class="hide-completed">
+          <input type="checkbox" checked="{{hideCompleted}}" />
+          Hide Completed Tasks
+        </label>
 
-      <form class="new-task">
-        <input type="text" id="title" placeholder="Type to add a new task" />
-      </form>
-    </header>
+        <form class="new-task">
+          <input type="text" id="title" placeholder="Type to add a new task" />
+        </form>
+      </header>
 
-    <ul>
-      {{#each tasks}}
-        {{> task}}
-      {{/each}}
-    </ul>
+      <ul>
+        {{#each tasks}}
+          {{> task}}
+        {{/each}}
+      </ul>
+    </section>
+
+    <section class="list_middle">
+      <header>
+        <h1>Doing ({{incompleteCount}})</h1>
+
+        <label class="hide-completed">
+          <input type="checkbox" checked="{{hideCompleted}}" />
+          Hide Completed Tasks
+        </label>
+
+        <form class="new-task">
+          <input type="text" id="title" placeholder="Type to add a new task" />
+        </form>
+      </header>
+
+      <ul>
+        {{#each tasks}}
+          {{> task}}
+        {{/each}}
+      </ul>
+    </section>
+
+    <section class="list_right">
+      <header>
+        <h1>Done ({{incompleteCount}})</h1>
+
+        <label class="hide-completed">
+          <input type="checkbox" checked="{{hideCompleted}}" />
+          Hide Completed Tasks
+        </label>
+
+        <form class="new-task">
+          <input type="text" id="title" placeholder="Type to add a new task" />
+        </form>
+      </header>
+
+      <ul>
+        {{#each tasks}}
+          {{> task}}
+        {{/each}}
+      </ul>
+    </section>
   </div>
 </template>
 
 <template name="task">
-  <li class="{{#if checked}}checked{{/if}}">
-    <button class="delete">&times;</button>
+  <article class="card">
+    <header>
+      <li class="{{#if checked}}checked{{/if}}">
 
-    <button type="checkbox" checked="{{checked}}" class="toggle-checked">
-    </button>
+        <button class="delete">&times;</button>
 
-    <span class="text">{{title}}</span>
-  </li>
+        <input type="checkbox" checked="{{checked}}" class="toggle-checked">
+
+        <span class="text">{{title}}</span>
+
+      </li>
+    </header>
+    <div class="detail">{{createdAt}}</div>
+  </article>
+</template>
+
+<template name="pageNotFound">
+  <div class="align">
+    <div class="site__container">
+      <div class="grid__container">
+        <h2 class="page404">404 - page not found</h2>
+      </div>
+    </div>
+  </div>
 </template>
