@@ -101,42 +101,46 @@
       <header>
         <h1>To Do ({{incompleteCount}})</h1>
 
-        <label class="hide-completed">
+        <!-- <label class="hide-completed">
           <input type="checkbox" checked="{{hideCompleted}}" />
           Hide Completed Tasks
-        </label>
+        </label> -->
 
         <form class="new-task">
           <input type="text" id="title" placeholder="Type to add a new task" />
         </form>
       </header>
 
-      <ul>
-        {{#each tasks}}
-          {{> task}}
-        {{/each}}
-      </ul>
+      <div class="scroll">
+        <ul>
+          {{#each tasks}}
+            {{> task}}
+          {{/each}}
+        </ul>
+      </div>
     </section>
 
     <section class="list_middle">
       <header>
         <h1>Doing ({{incompleteCount}})</h1>
 
-        <label class="hide-completed">
+        <!-- <label class="hide-completed">
           <input type="checkbox" checked="{{hideCompleted}}" />
           Hide Completed Tasks
-        </label>
+        </label> -->
 
         <form class="new-task">
           <input type="text" id="title" placeholder="Type to add a new task" />
         </form>
       </header>
 
-      <ul>
-        {{#each tasks}}
-          {{> task}}
-        {{/each}}
-      </ul>
+      <div class="scroll">
+        <ul>
+          {{#each tasks}}
+            {{> task}}
+          {{/each}}
+        </ul>
+      </div>
     </section>
 
     <section class="list_right">
@@ -153,30 +157,34 @@
         </form>
       </header>
 
-      <ul>
-        {{#each tasks}}
-          {{> task}}
-        {{/each}}
-      </ul>
+      <div class="scroll">
+        <ul>
+          {{#each tasks}}
+            {{> task}}
+          {{/each}}
+        </ul>
+      </div>
     </section>
   </div>
 </template>
 
 <template name="task">
-  <article class="card">
-    <header>
-      <li class="{{#if checked}}checked{{/if}}">
+  <div ondrop="drop(event)" ondragover="allowDrop(event)">
+    <article class="card">
+      <header>
+        <li class="{{#if checked}}checked{{/if}}" ondragstart="dragStart(event)" draggable="true">
 
-        <button class="delete">&times;</button>
+          <button class="delete">&times;</button>
 
-        <input type="checkbox" checked="{{checked}}" class="toggle-checked">
+          <input type="checkbox" checked="{{checked}}" class="toggle-checked">
 
-        <span class="text">{{title}}</span>
+          <span class="text">{{title}}</span>
 
-      </li>
-    </header>
-    <div class="detail">{{createdAt}}</div>
-  </article>
+        </li>
+      </header>
+      <div class="detail">{{createdAt}}</div>
+    </article>
+  </div>
 </template>
 
 <template name="pageNotFound">

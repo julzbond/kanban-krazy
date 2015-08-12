@@ -124,6 +124,7 @@ input {
 }
 
 .text--center {
+  color: #606973;
   text-align: center;
   margin: 30px;
 }

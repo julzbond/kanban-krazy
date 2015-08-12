@@ -66,6 +66,8 @@ header .hide-completed {
 }
 
 #logout-buttons {
+  font-family: sans-serif;
+  font: 400 0.875rem/1.5 "Helvetica Neue", Arial, Helvetica,"Open Sans", sans-serif;
   background: #3498db;
   background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
   background-image: -moz-linear-gradient(top, #3498db, #2980b9);
@@ -75,12 +77,11 @@ header .hide-completed {
   -webkit-border-radius: 10;
   -moz-border-radius: 10;
   border-radius: 10px;
-  /*font-family: Arial;*/
   color: #ffffff;
   font-size: 30px;
-  padding: 15px 50px 15px 50px;
+  padding: 10px 50px 10px 50px;
   text-decoration: none;
-  margin: 20px;
+  margin: 20px 60px;
 }
 
 #login-buttons:hover {
@@ -140,6 +141,11 @@ ul {
   margin: 0;
   padding: 0;
   border-radius: 0 0 5px 5px;
+}
+
+.scroll {
+  max-height: 475px;
+  overflow: scroll;
 }
 
 .delete {
@@ -207,6 +213,8 @@ li.private {
   margin: 5px 5px;
   padding: 10px;
   max-width: 375px;
+  max-height: 600px;
+  /*overflow: scroll;*/
 
   -webkit-flex: 1;
           flex: 1;
@@ -218,6 +226,8 @@ li.private {
   margin: 5px 5px;
   padding: 10px;
   max-width: 375px;
+  max-height: 600px;
+  /*overflow: scroll;*/
 
   -webkit-flex: 2;
           flex: 2;
@@ -229,6 +239,8 @@ li.private {
   margin: 5px 5px;
   padding: 10px;
   max-width: 375px;
+  max-height: 600px;
+  /*overflow: scroll;*/
 
   -webkit-flex: 3;
           flex: 3;
@@ -254,7 +266,7 @@ article {
   cursor: pointer;
 }
 
-.list .card:hover {
+.card:hover {
   background-color: #F0F0F0;
 }
 
