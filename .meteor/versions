@@ -1,17 +1,3 @@
-Skip to content
-This repository
-Pull requests
-Issues
-Gist
- @julzbond
- Watch 1
-  Star 0
- Fork 1oteswang/kanban-krazy
-forked from julzbond/kanban-krazy
-Branch: master  kanban-krazy/.meteor/versions
-@oteswangoteswang 18 hours ago added flexbox to align the sections
-2 contributors @oteswang @julzbond
-RawBlameHistory     66 lines (65 sloc)  1.098 kB
 accounts-base@1.2.0
 accounts-password@1.1.1
 accounts-ui@1.1.5
@@ -77,5 +63,3 @@ underscore@1.0.3
 url@1.0.4
 webapp@1.2.0
 webapp-hashing@1.0.3
-Status API Training Shop Blog About Help
-© 2015 GitHub, Inc. Terms Privacy Security Contact
