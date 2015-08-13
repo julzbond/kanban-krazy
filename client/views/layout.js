@@ -42,7 +42,52 @@ if(Meteor.isClient) {
         }
         return false;
       });
+    },
+
+    'click #facebook-login': function(event){
+      Meteor.loginWithFacebook({}, function(err){
+        if (err){
+          throw new Meteor.Error("Facebook login failed");
+        } else {
+          Router.go('/dashboard');
+        }
+        return false;
+      });
+    },
+
+    'click #twitter-login': function(event){
+      Meteor.loginWithTwitter({}, function(err){
+        if (err){
+          throw new Meteor.Error("Twitter login failed");
+        } else {
+          Router.go('/dashboard');
+        }
+        return false;
+      });
+    },
+
+    'click #google-login': function(event){
+      Meteor.loginWithGoogle({}, function(err){
+        if (err){
+          throw new Meteor.Error("Google login failed");
+        } else {
+          Router.go('/dashboard');
+        }
+        return false;
+      });
+    },
+
+    'click #github-login': function(event){
+      Meteor.loginWithGithub({}, function(err){
+        if (err){
+          throw new Meteor.Error("Github login failed");
+        } else {
+          Router.go('/dashboard');
+        }
+        return false;
+      });
     }
+
   });
 
   Template.dashboard.events({
