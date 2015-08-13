@@ -1,3 +1,5 @@
 Meteor.subscribe('tasks', function(){
-  return TasksCollection.find();
+  return TasksCollection.find({
+    user_id: this.userId,
+  });
 });

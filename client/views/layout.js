@@ -83,6 +83,7 @@ if(Meteor.isClient) {
 
       if(event.keyCode === 13) {
         TasksCollection.insert({
+          user_id: Meteor.user()._id,
           title: title,
           show: true,
           createdAt: new Date()
