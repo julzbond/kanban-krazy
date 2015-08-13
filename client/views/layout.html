@@ -3,54 +3,196 @@
 </head>
 
 <body>
-  <h1>Kanban Board</h1>
+
 </body>
 
 <template name="home">
   {{#if currentUser}}
     {{> dashboard}}
   {{else}}
-    {{> register}}
     {{> login}}
   {{/if}}
 </template>
 
-<template name="register">
-    <h2>Register</h2>
-    <form id="register-form" action="action">
-        <input type="email" name="registerEmail" placeholder="Enter Your Email">
-        <input type="password" name="registerPassword" placeholder="Enter Your Password">
-        <input type="submit" value="Register">
-    </form>
+<template name="login">
+  <div class="align">
+    <div class="site__container">
+      <div class="grid__container">
+        <h2 class="login">Login</h2>
+        <form id="login-form" action="action" class="form form--login">
+
+          <div class="form__field">
+            <label class="fontawesome-envelope" for="login__username"><span class="hidden">Username</span></label>
+            <input id="login__username" type="email" class="form__input" name="loginEmail" placeholder="Email" required>
+          </div>
+
+          <div class="form__field">
+            <label class="fontawesome-lock" for="login__password"><span class="hidden">Password</span></label>
+            <input id="login__password" type="password" class="form__input" name="loginPassword" placeholder="Password" required>
+          </div>
+
+          <div class="form__field">
+            <input type="submit" value="Sign In">
+          </div>
+
+        </form>
+          <p class="text--center">Not a member? <a href="/register">Sign up now</a> <span class="fontawesome-arrow-right"></span></p>
+      </div>
+    </div>
+  </div>
 </template>
 
-<template name="login">
-    <h2>Login</h2>
-    <form id="login-form" action="action">
-        <input type="email" name="loginEmail" placeholder="Enter Your Email">
-        <input type="password" name="loginPassword" placeholder="Enter Your Password">
-        <input type="submit" value="Login">
-    </form>
+<template name="register">
+  <div class="align">
+    <div class="site__container">
+      <div class="grid__container">
+        <h2 class="login">Create a new account</h2>
+        <form id="register-form" action="action" class="form form--login">
+
+          <div class="form__field">
+          <label class="fontawesome-user" for="login__username"><span class="hidden">Name</span></label>
+          <input id="login__username" type="text" class="form__input" name="registerName" placeholder="Enter Your Name">
+          </div>
+
+          <div class="form__field">
+            <label class="fontawesome-envelope" for="login__username"><span class="hidden">Email</span></label>
+            <input id="login__username" type="email" class="form__input" name="registerEmail" placeholder="Enter Your Email" required>
+          </div>
+
+          <div class="form__field">
+            <label class="fontawesome-lock" for="login__password"><span class="hidden">Password</span></label>
+            <input id="login__password" type="password" class="form__input" name="registerPassword" placeholder="Choose a Password" required>
+          </div>
+
+          <div class="form__field">
+            <input type="submit" value="Register">
+          </div>
+
+        </form>
+          <p class="text--center"><a href="/#login">Go Back </a><span class="fontawesome-arrow-left"></span></p>
+      </div>
+    </div>
+  </div>
 </template>
 
 <template name="dashboard">
   <div id="dashboard">
-    <p>You're logged in.</p>
-    <p><a href="#" class="logout">Logout</a></p>
+    {{> profile}}
+    {{> tasks}}
+    {{> logout}}
+  </div>
+</template>
+
+<template name="profile">
+  <div class="profile">
+
+  </div>
+</template>
+
+<template name="logout">
+  <div id="logout">
+    <button id="logout-buttons" class="logout"><a class="logout" href="#">Logout</a></button>
   </div>
 </template>
 
 <template name="tasks">
-  <div class="tasks">
-    {{#each tasks}}
-      {{> task}}
-    {{/each}}
+  <div class="container">
+    <section class="list_left">
+      <header>
+        <h1>To Do ({{incompleteCount}})</h1>
+
+        <!-- <label class="hide-completed">
+          <input type="checkbox" checked="{{hideCompleted}}" />
+          Hide Completed Tasks
+        </label> -->
+
+        <form class="new-task">
+          <input type="text" id="title" placeholder="Type to add a new task" />
+        </form>
+      </header>
+
+      <div class="scroll">
+        <ul>
+          {{#each tasks}}
+            {{> task}}
+          {{/each}}
+        </ul>
+      </div>
+    </section>
+
+    <section class="list_middle">
+      <header>
+        <h1>Doing ({{incompleteCount}})</h1>
+
+        <!-- <label class="hide-completed">
+          <input type="checkbox" checked="{{hideCompleted}}" />
+          Hide Completed Tasks
+        </label> -->
+
+        <form class="new-task">
+          <input type="text" id="title" placeholder="Type to add a new task" />
+        </form>
+      </header>
+
+      <div class="scroll">
+        <ul>
+          {{#each tasks}}
+            {{> task}}
+          {{/each}}
+        </ul>
+      </div>
+    </section>
+
+    <section class="list_right">
+      <header>
+        <h1>Done ({{incompleteCount}})</h1>
+
+        <label class="hide-completed">
+          <input type="checkbox" checked="{{hideCompleted}}" />
+          Hide Completed Tasks
+        </label>
+
+        <form class="new-task">
+          <input type="text" id="title" placeholder="Type to add a new task" />
+        </form>
+      </header>
+
+      <div class="scroll">
+        <ul>
+          {{#each tasks}}
+            {{> task}}
+          {{/each}}
+        </ul>
+      </div>
+    </section>
   </div>
 </template>
 
 <template name="task">
-  <div class="task">
-    <div class="title">{{title}}</div>
-    <div class="description">{{description}}</div>
+  <div ondrop="drop(event)" ondragover="allowDrop(event)">
+    <article class="card">
+      <header>
+        <li class="{{#if checked}}checked{{/if}}" ondragstart="dragStart(event)" draggable="true">
+
+          <button class="delete">&times;</button>
+
+          <input type="checkbox" checked="{{checked}}" class="toggle-checked">
+
+          <span class="text">{{title}}</span>
+
+        </li>
+      </header>
+      <div class="detail">{{createdAt}}</div>
+    </article>
+  </div>
+</template>
+
+<template name="pageNotFound">
+  <div class="align">
+    <div class="site__container">
+      <div class="grid__container">
+        <h2 class="page404">404 - page not found</h2>
+      </div>
+    </div>
   </div>
 </template>

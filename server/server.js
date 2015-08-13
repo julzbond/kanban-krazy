@@ -1,14 +1,10 @@
 Meteor.startup(function(){
   if(TasksCollection.find().fetch().length === 0){
     TasksCollection.insert({
-      title: "First Task",
-      description: "Hello World",
+      title: "Test title",
+      description: "This is a task description",
       show: true,
-      added: Date.now()
+      createdAt: new Date()
     });
   }
-});
-
-Meteor.publish('userData', function(){
-
 });
