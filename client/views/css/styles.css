@@ -81,7 +81,7 @@ header .hide-completed {
   font-size: 30px;
   padding: 10px 50px 10px 50px;
   text-decoration: none;
-  margin: 20px 60px;
+  margin: 20px 100px;
 }
 
 #login-buttons:hover {
@@ -144,8 +144,45 @@ ul {
 }
 
 .scroll {
-  max-height: 475px;
-  overflow: scroll;
+  max-height: 540px;
+  flex-direction: column;
+  /*max-height: 100%;*/
+  position: relative;
+
+  -webkit-box-flex: 1;
+  -webkit-flex: 1 1 auto;
+  -ms-flex: 1 1 auto;
+  /*flex: 1 1 auto;*/
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin: 0 4px;
+  padding: 0 4px;
+  z-index: 1;
+
+  -webkit-overflow-scrolling: touch;
+  -webkit-transform: translate3d(0,0,0);
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: rgba(96,100,104,0.8);
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+}
+::-webkit-scrollbar-thumb:window-inactive {
+    background: rgba(96,100,104,0.4);
 }
 
 .delete {
@@ -213,8 +250,7 @@ li.private {
   margin: 5px 5px;
   padding: 10px;
   max-width: 375px;
-  max-height: 600px;
-  /*overflow: scroll;*/
+  max-height: 660px;
 
   -webkit-flex: 1;
           flex: 1;
@@ -226,8 +262,7 @@ li.private {
   margin: 5px 5px;
   padding: 10px;
   max-width: 375px;
-  max-height: 600px;
-  /*overflow: scroll;*/
+  max-height: 660px;
 
   -webkit-flex: 2;
           flex: 2;
@@ -239,8 +274,7 @@ li.private {
   margin: 5px 5px;
   padding: 10px;
   max-width: 375px;
-  max-height: 600px;
-  /*overflow: scroll;*/
+  max-height: 660px;
 
   -webkit-flex: 3;
           flex: 3;
