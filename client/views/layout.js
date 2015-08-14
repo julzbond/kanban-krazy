@@ -87,7 +87,6 @@ if(Meteor.isClient) {
         return false;
       });
     }
-
   });
 
   Template.dashboard.events({
@@ -98,44 +97,45 @@ if(Meteor.isClient) {
     }
   });
 
-  Template.tasks.helpers({
+  Template.todos.helpers({
 
-    tasks: function() {
+    todos: function() {
       if (Session.get("hideCompleted")) {
-        return TasksCollection.find({checked: {$ne: true}}, {sort: {createdAt: -1}});
+        return TasksCollection.find({checked: {$ne: true}, state: "todos"}, {sort: {createdAt: -1}});
       } else {
-        return TasksCollection.find({}, {sort: {createdAt: -1}});
+        return TasksCollection.find({state: "todos"}, {sort: {createdAt: -1}});
       }
 
-      return TasksCollection.find({}, {sort: {createdAt: -1}}).fetch();
+      // return TasksCollection.find({state: "todos"}, {sort: {createdAt: -1}}).fetch();
     },
     hideCompleted: function () {
       return Session.get("hideCompleted");
     },
     incompleteCount: function () {
-      return TasksCollection.find({checked: {$ne: true}}).count();
+      return TasksCollection.find({checked: {$ne: true}, state: "todos"}).count();
     }
   });
 
-  Template.tasks.events({
-    "keypress .new-task": function(event, template) {
+  Template.todos.events({
+    "keypress .new-task-todo": function(event, template) {
 
-      var title = template.find("#title").value;
+      var title_todo = template.find("#title_todo").value;
 
-      if(title === "") {
+      if(title_todo === "") {
         return;
       }
 
       if(event.keyCode === 13) {
         TasksCollection.insert({
           user_id: Meteor.user()._id,
-          title: title,
+          title: title_todo,
           show: true,
-          createdAt: new Date()
+          createdAt: new Date(),
+          state: "todos"
         });
 
-        template.find("#title").value = "";
-        template.find("#title").focus();
+        template.find("#title_todo").value = "";
+        template.find("#title_todo").focus();
         event.preventDefault();
       }
     },
@@ -144,10 +144,129 @@ if(Meteor.isClient) {
     }
   });
 
-  Template.task.events({
+  Template.todo.events({
     "click .drop": function (event) {
       drop(event);
     },
+    "click .toggle-checked": function () {
+      TasksCollection.update(this._id, {
+        $set: {checked: ! this.checked}
+      });
+    },
+    "click .delete": function () {
+      TasksCollection.remove(this._id);
+    }
+  });
+
+  Template.doings.helpers({
+
+    doings: function() {
+      if (Session.get("hideCompleted")) {
+        return TasksCollection.find({checked: {$ne: true}, state: "doings"}, {sort: {createdAt: -1}});
+      } else {
+        return TasksCollection.find({state: "doings"}, {sort: {createdAt: -1}});
+      }
+
+      // return TasksCollection.find({}, {sort: {createdAt: -1}}).fetch();
+    },
+    hideCompleted: function () {
+      return Session.get("hideCompleted");
+    },
+    incompleteCount: function () {
+      return TasksCollection.find({checked: {$ne: true}, state: "doings"}).count();
+    }
+  });
+
+  Template.doings.events({
+    "keypress .new-task-doing": function(event, template) {
+
+      var title_doing = template.find("#title_doing").value;
+
+      if(title_doing === "") {
+        return;
+      }
+
+      if(event.keyCode === 13) {
+        TasksCollection.insert({
+          user_id: Meteor.user()._id,
+          title: title_doing,
+          show: true,
+          createdAt: new Date(),
+          state: "doings"
+        });
+
+        template.find("#title_doing").value = "";
+        template.find("#title_doing").focus();
+        event.preventDefault();
+      }
+    },
+    "change .hide-completed input": function (event) {
+      Session.set("hideCompleted", event.target.checked);
+    }
+  });
+
+  Template.doing.events({
+    "click .drop": function (event) {
+      drop(event);
+    },
+    "click .toggle-checked": function () {
+      TasksCollection.update(this._id, {
+        $set: {checked: ! this.checked}
+      });
+    },
+    "click .delete": function () {
+      TasksCollection.remove(this._id);
+    }
+  });
+
+  Template.dones.helpers({
+
+    dones: function() {
+      if (Session.get("hideCompleted")) {
+        return TasksCollection.find({checked: {$ne: true}, state: "dones"}, {sort: {createdAt: -1}});
+      } else {
+        return TasksCollection.find({state: "dones"}, {sort: {createdAt: -1}});
+      }
+
+      // return TasksCollection.find({}, {sort: {createdAt: -1}}).fetch();
+    },
+    hideCompleted: function () {
+      return Session.get("hideCompleted");
+    },
+    incompleteCount: function () {
+      return TasksCollection.find({checked: {$ne: true}, state: "dones"}).count();
+    }
+  });
+
+  Template.dones.events({
+    "keypress .new-task-done": function(event, template) {
+
+      var title_done = template.find("#title_done").value;
+
+      if(title_done === "") {
+        return;
+      }
+
+      if(event.keyCode === 13) {
+        TasksCollection.insert({
+          user_id: Meteor.user()._id,
+          title: title_done,
+          show: true,
+          createdAt: new Date(),
+          state: "dones"
+        });
+
+        template.find("#title_done").value = "";
+        template.find("#title_done").focus();
+        event.preventDefault();
+      }
+    },
+    "change .hide-completed input": function (event) {
+      Session.set("hideCompleted", event.target.checked);
+    }
+  });
+
+  Template.done.events({
     "click .toggle-checked": function () {
       TasksCollection.update(this._id, {
         $set: {checked: ! this.checked}
