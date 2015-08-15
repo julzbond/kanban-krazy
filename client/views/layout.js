@@ -99,230 +99,159 @@ Template.dashboard.events({
 });
 
 Template.todos.helpers({
-  todos: function() {
-    if (Session.get("hideCompleted")) {
-      return TasksCollection.find(
-        {
-          checked: { $ne: true },
-          state: "todos"
-        },
-        {
-          sort: { createdAt: -1 }
-        });
-    } else {
-      return TasksCollection.find(
-        {
-          state: "todos"
-        },
-        {
-          sort: { createdAt: -1 }
-        });
-    }
-
-    // return TasksCollection.find({state: "todos"}, {sort: {createdAt: -1}}).fetch();
-  },
-  hideCompleted: function () {
-    return Session.get("hideCompleted");
-  },
-  incompleteCount: function () {
-    return TasksCollection
-      .find({
-        checked: { $ne: true },
-        state: "todos"
-      })
-      .count();
-  }
+  "todos": hideCompleteToDos,
+  "hideCompleted": hideCompleted,
+  "incompleteCount": countIncompleteToDos
 });
 
 Template.todos.events({
-  "keypress .new-task-todo": function(event, template){
-    var title_todo = template.find("#title_todo").value;
-    if (title_todo.trim() === "") {
-      return;
-    }
-    if (event.keyCode === 13) {
-      TasksCollection.insert({
-        user_id: Meteor.user()._id,
-        title: title_todo,
-        show: true,
-        createdAt: new Date(),
-        state: "todos"
-      });
-      template.find("#title_todo").value = "";
-      template.find("#title_todo").focus();
-      event.preventDefault();
-    }
-  },
-
-  "change .hide-completed input": function(event){
-    Session.set("hideCompleted", event.target.checked);
-  }
+  "keypress .new-task-todo": createNewToDo,
+  "change .hide-completed input": changeHideCompleted
 });
 
 Template.todo.events({
-  "click .drop": function(event){
-    drop(event);
-  },
-
-  "click .toggle-checked": function () {
-    TasksCollection.update(this._id, {
-      $set: { checked: !this.checked }
-    });
-  },
-
-  "click .delete": function () {
-    TasksCollection.remove(this._id);
-  }
+  "click .toggle-checked": toggleCheckedTask,
+  "click .delete": removeTask
 });
 
 Template.doings.helpers({
-  doings: function(){
-    if (Session.get("hideCompleted")) {
-      return TasksCollection.find(
-        {
-          checked: { $ne: true },
-          state: "doings"
-        },
-        {
-          sort: { createdAt: -1 }
-        });
-    } else {
-      return TasksCollection.find(
-        {
-          state: "doings"
-        },
-        {
-          sort: { createdAt: -1 }
-        });
-    }
-
-    // return TasksCollection.find({}, {sort: {createdAt: -1}}).fetch();
-  },
-
-  hideCompleted: function(){
-    return Session.get("hideCompleted");
-  },
-
-  incompleteCount: function(){
-    return TasksCollection
-    .find({
-        checked: {$ne: true},
-        state: "doings"
-      })
-    .count();
-  }
+  "doings": hideCompleteDoings,
+  "hideCompleted": hideCompleted,
+  "incompleteCount": countIncompleteDoings
 });
 
 Template.doings.events({
-  "keypress .new-task-doing": function(event, template){
-    var title_doing = template.find("#title_doing").value;
-    if (title_doing.trim() === "") {
-      return;
-    }
-    if (event.keyCode === 13) {
-      TasksCollection.insert({
-        user_id: Meteor.user()._id,
-        title: title_doing,
-        show: true,
-        createdAt: new Date(),
-        state: "doings"
-      });
-      template.find("#title_doing").value = "";
-      template.find("#title_doing").focus();
-      event.preventDefault();
-    }
-  },
-
-  "change .hide-completed input": function (event) {
-    Session.set("hideCompleted", event.target.checked);
-  }
+  "keypress .new-task-doing": createNewDoing,
+  "change .hide-completed input": changeHideCompleted
 });
 
 Template.doing.events({
-  "click .drop": function (event) {
-    drop(event);
-  },
-
-  "click .toggle-checked": function () {
-    TasksCollection.update(this._id, {
-      $set: { checked: !this.checked }
-    });
-  },
-
-  "click .delete": function () {
-    TasksCollection.remove(this._id);
-  }
+  "click .toggle-checked": toggleCheckedTask,
+  "click .delete": removeTask
 });
 
 Template.dones.helpers({
-
-  dones: function() {
-    if (Session.get("hideCompleted")) {
-      return TasksCollection.find(
-        {
-          checked: { $ne: true },
-          state: "dones"
-        },
-        {
-          sort: { createdAt: -1 }
-        });
-    } else {
-      return TasksCollection.find(
-        {
-          state: "dones"
-        },
-        {
-          sort: { createdAt: -1 }
-        });
-    }
-
-    // return TasksCollection.find({}, {sort: {createdAt: -1}}).fetch();
-  },
-  hideCompleted: function () {
-    return Session.get("hideCompleted");
-  },
-  incompleteCount: function () {
-    return TasksCollection
-    .find({
-        checked: {$ne: true},
-        state: "dones"
-      })
-    .count();  }
+  "dones": hideCompleteDones,
+  "hideCompleted": hideCompleted,
+  "incompleteCount": countIncompleteDones
 });
 
 Template.dones.events({
-  "keypress .new-task-done": function(event, template) {
-    var title_done = template.find("#title_done").value;
-    if (title_done.trim() === "") {
-      return;
-    }
-    if (event.keyCode === 13) {
-      TasksCollection.insert({
-        user_id: Meteor.user()._id,
-        title: title_done,
-        show: true,
-        createdAt: new Date(),
-        state: "dones"
-      });
-      template.find("#title_done").value = "";
-      template.find("#title_done").focus();
-      event.preventDefault();
-    }
-  },
-
-  "change .hide-completed input": function (event) {
-    Session.set("hideCompleted", event.target.checked);
-  }
+  "keypress .new-task-done": createNewDone,
+  "change .hide-completed input": changeHideCompleted
 });
 
 Template.done.events({
-  "click .toggle-checked": function () {
-    TasksCollection.update(this._id, {
-      $set: { checked: !this.checked }
-    });
-  },
-
-  "click .delete": function () {
-    TasksCollection.remove(this._id);
-  }
+  "click .toggle-checked": toggleCheckedTask,
+  "click .delete": removeTask
 });
+
+
+// HELPER FUNCTIONS
+
+function hideTasks (taskState, bool) {
+  if (Session.get("hideCompleted")) {
+    return TasksCollection.find(
+      {
+        checked: bool,
+        state: taskState
+      },
+      {
+        sort: { createdAt: -1 }
+      });
+  } else {
+    return TasksCollection.find(
+      {
+        state: taskState
+      },
+      {
+        sort: { createdAt: -1 }
+      });
+  }
+  // return TasksCollection.find({state: "todos"}, {sort: {createdAt: -1}}).fetch();
+}
+
+function hideCompleteToDos () {
+  return hideTasks("todos", true);
+}
+
+function hideCompleteDoings () {
+  return hideTasks("doings", true);
+}
+
+function hideCompleteDones () {
+  return hideTasks("dones", true);
+}
+
+function hideCompleted () {
+  return Session.get("hideCompleted");
+}
+
+function countIncompleteTasks(taskState) {
+  return TasksCollection
+    .find({
+      checked: { $ne: true },
+      state: taskState
+    })
+    .count();
+}
+
+function countIncompleteToDos(){
+  return countIncompleteTasks("todos");
+}
+
+function countIncompleteDoings(){
+  return countIncompleteTasks("doings");
+}
+
+function countIncompleteDones(){
+  return countIncompleteTasks("dones");
+}
+
+
+//EVENT FUNCTIONS
+
+function createNewTask (taskState, taskId, event, template){
+  var title_todo = template.find(taskId).value;
+  if (title_todo.trim() === "") {
+    return;
+  }
+  if (event.keyCode === 13) {
+    TasksCollection.insert({
+      user_id: Meteor.user()._id,
+      title: title_todo,
+      show: true,
+      createdAt: new Date(),
+      state: taskState
+    });
+    template.find(taskId).value = "";
+    template.find(taskId).focus();
+    event.preventDefault();
+  }
+}
+
+function createNewToDo(event, template) {
+  return createNewTask("todos", "#title_todo", event, template);
+}
+
+function createNewDoing (event, template) {
+  return createNewTask("doings", "#title_doing", event, template);
+}
+
+function createNewDone (event, template) {
+  return createNewTask("dones", "#title_done", event, template);
+}
+
+function changeHideCompleted (event) {
+  Session.set("hideCompleted", event.target.checked);
+}
+
+function toggleCheckedTask () {
+  TasksCollection.update(this._id, {
+    $set: { checked: !this.checked }
+  });
+}
+
+function removeTask () {
+  TasksCollection.remove(this._id);
+}
