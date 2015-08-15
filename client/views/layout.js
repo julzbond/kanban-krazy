@@ -181,15 +181,15 @@ function hideTasks (taskState, bool) {
 }
 
 function hideCompleteToDos () {
-  return hideTasks("todos", true);
+  return hideTasks("todos", false);
 }
 
 function hideCompleteDoings () {
-  return hideTasks("doings", true);
+  return hideTasks("doings", false);
 }
 
 function hideCompleteDones () {
-  return hideTasks("dones", true);
+  return hideTasks("dones", false);
 }
 
 function hideCompleted () {
