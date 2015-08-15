@@ -8,23 +8,32 @@ Template.register.events({
 Template.register.events({
   'submit #register-form': function(event){
     event.preventDefault();
-    //add validations
-    var nameVar = event.target.registerName.value;
-    var emailVar = event.target.registerEmail.value;
-    var passwordVar = event.target.registerPassword.value;
-    Accounts.createUser({
-      name: nameVar,
-      email: emailVar,
-      password: passwordVar,
+
+    var username = event.target.registerName.value;
+    var email = event.target.registerEmail.value;
+    var password = event.target.registerPassword.value;
+
+    var newUser = {
+      username: username,
+      email: email,
+      password: password,
       createdAt: new Date()
-    },
+    };
+
+    Accounts.createUser(newUser,
     function(error){
       if(error){
         console.log(error.reason);
-      } else{
+      } else {
         Router.go('/dashboard');
       }
     });
+  }
+});
+
+Template.user.helpers({
+  userName: function() {
+    return Meteor.user().username;
   }
 });
 
