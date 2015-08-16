@@ -3,15 +3,26 @@
 </head>
 
 <body>
-
 </body>
 
-<template name="home">
+<template name="layout">
   {{#if currentUser}}
-    {{> dashboard}}
-  {{else}}
-    {{> login}}
+    {{> user}}
   {{/if}}
+  {{> yield}}
+</template>
+
+<template name="user">
+  <div class="wrapper">
+    <div class="user">
+      <div class="profile">
+        <h1>Hello, {{firstName}}</h1>
+        <a id="edit-profile" class="menu-item" href="/dashboard">Home</a>
+        <a id="edit-profile" class="menu-item" href="/dashboard/profile">Account</a>
+        <button id="logout-buttons"><a href="#">Logout</a></button>
+      </div>
+    </div>
+  </div>
 </template>
 
 <template name="login">
@@ -83,23 +94,40 @@
 </template>
 
 <template name="dashboard">
-    <div id="dashboard">
-      <div class="wrapper">
-        {{#if currentUser}}
-          {{> user}}
-        {{/if}}
-        {{> todos}}
-        {{> doings}}
-        {{> dones}}
-      </div>
-    </div>
+  <div id="dashboard" class="wrapper">
+    {{> todos}}
+    {{> doings}}
+    {{> dones}}
+  </div>
 </template>
 
-<template name="user">
-  <div class="user">
-    <div class="profile">
-      <h1>Hello {{userName}}</h1>
-      <button id="logout-buttons"><a href="#">Logout</a></button>
+<template name="profileEdit">
+  <div class="edit-box">
+    <div class="edit-header">
+      <h2>Edit your account</h2>
+    </div>
+    <div class="edit-main">
+      <form id="profile-form" action="action" class="form form--login">
+        <div class="form__field">
+          <label>First Name</label>
+          <input id="profile__firstname" type="text" class="form__input" name="firstName" value={{firstName}} placeholder="First Name">
+        </div>
+        <div class="form__field">
+          <label>Last Name</label>
+          <input id="profile__lastname" type="text" class="form__input" name="lastName" value={{lastName}} placeholder="Last Name">
+        </div>
+        <div class="form__field">
+          <label>Email Address</label>
+          <input id="profile__emailaddress" type="text" class="form__input" name="emailAddress" value={{emailAddress}} placeholder="Email Address">
+        </div>
+        <div class="form__field">
+          <label>Password</label>
+          <input id="profile__newpassword" type="password" class="form__input" name="newPassword" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;">
+        </div>
+        <div class="form__field">
+          <input type="submit" value="Save Changes">
+        </div>
+      </form>
     </div>
   </div>
 </template>

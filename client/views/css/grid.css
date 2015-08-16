@@ -3,8 +3,13 @@
   flex-flow: row wrap;
 }
 
-.tasks, .user {
+.tasks, .user, .edit-box {
   flex: 1 100%;
+}
+
+.edit-box {
+  margin: 0 auto;
+  padding: 10px;
 }
 
 /* Medium Screens */
@@ -14,6 +19,11 @@
     flex: 1 auto;
     padding: 10px;
     width: 32%;
+  }
+
+  .edit-box {
+    flex: 1 auto;
+    width: 64%;
   }
 }
 

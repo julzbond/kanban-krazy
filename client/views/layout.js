@@ -1,11 +1,4 @@
 Template.register.events({
-  'submit form': function(event){
-    event.preventDefault();
-    console.log('Form submitted.');
-  }
-});
-
-Template.register.events({
   'submit #register-form': function(event){
     event.preventDefault();
 
@@ -28,12 +21,6 @@ Template.register.events({
         Router.go('/dashboard');
       }
     });
-  }
-});
-
-Template.user.helpers({
-  userName: function() {
-    return Meteor.user().username;
   }
 });
 
@@ -99,11 +86,64 @@ Template.login.events({
   }
 });
 
-Template.dashboard.events({
-  'click .logout': function(event){
+Template.user.helpers({
+  firstName: function() {
+    return Meteor.user().profile.firstname;
+  }
+});
+
+Template.user.events({
+  'click #logout-buttons': function(event){
     event.preventDefault();
     Meteor.logout();
     Router.go('/login');
+  }
+});
+
+Template.profileEdit.helpers({
+  firstName: function() {
+    if(Meteor.user().profile.firstname){
+      return Meteor.user().profile.firstname;
+    }
+  },
+
+  lastName: function() {
+    if(Meteor.user().profile.lastname){
+      return Meteor.user().profile.lastname;
+    }
+  },
+
+  emailAddress: function() {
+    if(Meteor.user().emails[0].address){
+      return Meteor.user().emails[0].address;
+    }
+  }
+});
+
+Template.profileEdit.events({
+  'submit #profile-form': function(event){
+    event.preventDefault();
+
+    var firstname = event.target.firstName.value;
+    var lastname = event.target.lastName.value;
+    var emailaddress = event.target.emailAddress.value;
+
+    if (firstname.trim() !== "") {
+      Meteor.users.update(Meteor.userId(), { $set: { "profile.firstname" : firstname}}
+      );
+    }
+
+    if (lastname.trim() !== "") {
+      Meteor.users.update(Meteor.userId(), { $set: { "profile.lastname" : lastname}}
+      );
+    }
+
+    if (emailaddress.trim() !== "") {
+      Meteor.users.update(Meteor.userId(), { $set: { "emails.address" : emailaddress}}
+      );
+    }
+
+    Router.go('/dashboard');
   }
 });
 

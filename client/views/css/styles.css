@@ -64,17 +64,21 @@ form {
   position: relative;
 }
 
+.user {
+  background-color: #1C252B;
+  border-bottom: 1px solid #666;
+  color: #fff;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
 .profile {
   float: right;
   margin-right: 40px;
 }
 
-.user {
-  background-color: #1C252B;
-  border-bottom: 1px solid #666;
-  color: #fff;
-  padding: 20px 0px;
-  margin-bottom: 20px;
+.menu-item {
+  margin-right: 20px;
 }
 
 .page404 {
